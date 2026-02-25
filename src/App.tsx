@@ -2,19 +2,17 @@ import Header from './components/header'
 import SideNav from './components/sideNav'
 import { DataContextProvider } from './context/data-context'
 import Summary from './pages/summary'
-import { GlobalStyles } from './styles/main'
-
+import { Container } from './styles'
 export function App() {
   return (
-    <>
-      <GlobalStyles />
-      <DataContextProvider>
-        <Summary />
+    <DataContextProvider>
+      <Container>
+        <SideNav />
         <main>
-          <SideNav />
           <Header />
+          <Summary />
         </main>
-      </DataContextProvider>
-    </>
+      </Container>
+    </DataContextProvider>
   )
 }

@@ -4,7 +4,7 @@ const Summary = () => {
   const { data } = useData()
   console.log(data)
 
-  return <div>Summary</div>
+  return <div>Resumo</div>
 }
 
 export default Summary

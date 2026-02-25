@@ -1,4 +1,5 @@
 import useFetch from '@/hooks/use-fetch'
+import { getDaysAGo } from '@/util/days-a-go'
 import React from 'react'
 
 type ISales = {
@@ -15,6 +16,10 @@ type IDataContext = {
   loading: boolean
   error: string | null
   data: ISales[] | null
+  start: string
+  end: string
+  setStart: React.Dispatch<React.SetStateAction<string>>
+  setEnd: React.Dispatch<React.SetStateAction<string>>
 }
 
 const DataContext = React.createContext<IDataContext | null>(null)
@@ -26,12 +31,16 @@ export const useData = () => {
 }
 
 export const DataContextProvider = ({ children }: React.PropsWithChildren) => {
+  const [start, setStart] = React.useState(getDaysAGo(15))
+  const [end, setEnd] = React.useState(getDaysAGo(0))
   const { data, loading, error } = useFetch<ISales[]>(
-    'https://data.origamid.dev/vendas/'
+    `https://data.origamid.dev/vendas/?inicio=${start}&final=${end}`
   )
 
   return (
-    <DataContext.Provider value={{ data, loading, error }}>
+    <DataContext.Provider
+      value={{ data, loading, error, start, setStart, end, setEnd }}
+    >
       {children}
     </DataContext.Provider>
   )
